@@ -12,16 +12,6 @@ With the following command the angular-cli will be installed globally in your ma
 
     npm install -g @angular/cli 
 
-# How To install this repository
-
-We can install the master branch using the following commands:
-
-    git clone https://github.com/angular-university/angular-material-course.git
-
-    cd angular-material-course
-    npm ci
-
-Note: **We recommend using npm ci, instead of npm install**. This will ensure that you use the exact dependency versions set on package-lock.json, unlike npm install which might potentially change those versions.
 
 # To Run the Development Backend Server
 
