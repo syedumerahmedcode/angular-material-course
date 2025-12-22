@@ -26,12 +26,12 @@ export class CreateCourseStep1Component {
 
   startDate=new Date(1900,1,1);
 
-  dateClass: MatCalendarCellClassFunction<Date>=(cellDate, view)=>{
-    const date=cellDate.getDate();
-    if(view=='month'){
-      return (date===1)?'highlight-date':'';
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+    const date = cellDate.getDate();
+    if(view == 'month'){
+      return (date == 1) ? 'highlight-date' : "";
     }
-    return '';
+    return "";
   }
 
   constructor(private fb: UntypedFormBuilder) {
