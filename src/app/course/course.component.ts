@@ -5,7 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import {Course} from "../model/course";
 import {CoursesService} from "../services/courses.service";
-import {debounceTime, distinctUntilChanged, startWith, tap, delay, catchError} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, startWith, tap, delay, catchError, finalize} from 'rxjs/operators';
 import {merge, fromEvent, throwError} from "rxjs";
 import { Lesson } from '../model/lesson';
 
@@ -19,6 +19,7 @@ import { Lesson } from '../model/lesson';
 export class CourseComponent implements OnInit, AfterViewInit {
 
     course:Course;
+    loading = false;
 
    /*  lessons = [
        {
@@ -110,7 +111,7 @@ export class CourseComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
 
-        this.course = this.route.snapshot.data["course"];
+      this.course = this.route.snapshot.data["course"];
       this.loadLessonsPage();
 
     }
@@ -121,14 +122,16 @@ export class CourseComponent implements OnInit, AfterViewInit {
      * The tap() operator (previously called do()) is a side effect operator in RxJS that allows you to perform actions without modifying the Observable stream.
      */
     loadLessonsPage(){
+      this.loading = true;
       this.coursesService.findLessons(this.course.id, "asc", 0, 3)
       .pipe(
         tap(lessons => this.lessons = lessons),
-        catchError(err=>{
+        catchError(err => {
           console.log("Error loading lessons",err);
           alert("Error loading lessons");
           return throwError(err); 
-        })
+        } ),
+        finalize( () => this.loading = false)
       )
       .subscribe();
     }
