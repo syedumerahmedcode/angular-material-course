@@ -17,6 +17,7 @@ export class CoursesCardListComponent implements OnInit {
     courses: Course[];
     cols = 3;
     rowHeight = '500px';
+    handsetPotrait = false;
 
 
     /**
@@ -40,12 +41,14 @@ export class CoursesCardListComponent implements OnInit {
 
                 this.cols = 3;
                 this.rowHeight = "500px";
+                this.handsetPotrait = false;
 
                 if(breakpoints[Breakpoints.TabletPortrait]){
                     this.cols = 1;
                 } else if(breakpoints[Breakpoints.HandsetPortrait]){
                     this.cols = 1;
                     this.rowHeight= "430px";
+                    this.handsetPotrait = true;
                 } else if(breakpoints[Breakpoints.HandsetLandscape]){
                     this.cols = 1;
                 } else if(breakpoints[Breakpoints.TabletLandscape]){
