@@ -92,8 +92,41 @@ export class DragDropComponent {
     }
   ];
 
+  done=[];
+
+  dropMultiList(event: CdkDragDrop<Lesson[]>){
+    if (event.container == event.previousContainer){
+      /**
+       * Moves an item one index in an array to another.
+
+        param array — Array in which to move the item.
+
+        param fromIndex — Starting index of the item.
+
+        param toIndex — Index to which the item should be moved.
+      */
+       moveItemInArray(this.lessons, event.previousIndex, event.currentIndex);
+    } else {
+      /**
+       * Moves an item from one array to another.
+          param currentArray — Array from which to transfer the item.
+          param targetArray — Array into which to put the item.
+          param currentIndex — Index of the item in its current array.
+          param targetIndex — Index at which to insert the item.
+       * 
+       */
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+
+  }
+
   /**
-   * Whta should be done when the user drop an item in the drag-drop list after dragging it.
+   * What should be done when the user drop an item in the drag-drop list after dragging it.
    * @param event Event emitted when the user drops a draggable item inside a drop container. 
    *              It takes one generic parameter which is the type of list we are dragging and dropping.
    *              Here it is a list of lessons.
