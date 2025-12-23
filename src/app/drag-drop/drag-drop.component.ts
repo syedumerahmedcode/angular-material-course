@@ -11,6 +11,7 @@ import {Lesson} from '../model/lesson';
 })
 export class DragDropComponent {
 
+
   lessons = [
     {
       id: 120,
@@ -90,5 +91,27 @@ export class DragDropComponent {
       courseId: 11
     }
   ];
+
+  /**
+   * Whta should be done when the user drop an item in the drag-drop list after dragging it.
+   * @param event Event emitted when the user drops a draggable item inside a drop container. 
+   *              It takes one generic parameter which is the type of list we are dragging and dropping.
+   *              Here it is a list of lessons.
+   */
+  drop(event: CdkDragDrop<Lesson>) {
+    console.log("previous index: " + event.previousIndex);
+    console.log("current index: " + event.currentIndex);
+    /**
+     * Moves an item one index in an array to another.
+
+      param array — Array in which to move the item.
+
+      param fromIndex — Starting index of the item.
+
+      param toIndex — Index to which the item should be moved.
+     */
+    moveItemInArray(this.lessons, event.previousIndex, event.currentIndex)
+    
+  }
 
 }
