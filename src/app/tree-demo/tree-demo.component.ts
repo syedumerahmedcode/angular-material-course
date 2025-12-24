@@ -7,6 +7,12 @@ interface CourseNode {
   children?: CourseNode[];
 }
 
+interface CourseFlatNode {
+  name: string;
+  expandable: boolean;
+  level: number;
+}
+
 const TREE_DATA: CourseNode[] = [
   {
     name: 'Angular For Beginners',
@@ -59,6 +65,7 @@ const TREE_DATA: CourseNode[] = [
 })
 export class TreeDemoComponent implements OnInit {
 
+  // Nested tree
   /**
    * Data source for nested tree.
    * The data source for nested tree doesn't have to consider node flattener, or the way to expand or collapse. 
@@ -72,14 +79,38 @@ export class TreeDemoComponent implements OnInit {
    * It needs a function which extracts the children of the node.
    */
   nestedTreeControl=new NestedTreeControl<CourseNode>(node => node.children);
+  //Flat tree
+  flatTreeControl = new FlatTreeControl<CourseFlatNode>(
+    node => node.level,
+    node => node.expandable
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    (node:CourseNode, level: number): CourseFlatNode => {
+      return {
+        name: node.name,
+        expandable: node.children?.length > 0,
+        level
+      }
+    }, 
+    node => node.level,
+    node => node.expandable ,
+    node => node.children
+  );
+
+  flatDataSource=new MatTreeFlatDataSource(this.flatTreeControl, this.treeFlattener);
 
   ngOnInit() {
     this.nestedDataSource.data = TREE_DATA;
-
+    this.flatDataSource.data = TREE_DATA;
   }
 
   hasNestedChild (index: number, node: CourseNode) {
     return node?.children?.length > 0;
+  }
+
+  hasFlatChild (index: number, node:CourseFlatNode) {
+    return node.expandable;
   }
 
 }
