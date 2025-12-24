@@ -39,7 +39,7 @@ export class CoursesCardListComponent implements OnInit {
             .subscribe(result =>{
                 const breakpoints = result.breakpoints;
 
-                this.cols = 3;
+                this.cols = 2;
                 this.rowHeight = "500px";
                 this.handsetPotrait = false;
 

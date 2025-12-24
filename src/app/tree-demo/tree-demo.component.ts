@@ -59,10 +59,27 @@ const TREE_DATA: CourseNode[] = [
 })
 export class TreeDemoComponent implements OnInit {
 
+  /**
+   * Data source for nested tree.
+   * The data source for nested tree doesn't have to consider node flattener, or the way to expand or collapse. 
+   * The expansion/collapsion will be handled by TreeControl and each non-leaf node.
+   * The datasource take a generic parameter the type of the node.
+   */
+  nestedDataSource = new MatTreeNestedDataSource<CourseNode>();
+
+  /**
+   * take a generic parameter the type of the node.
+   * It needs a function which extracts the children of the node.
+   */
+  nestedTreeControl=new NestedTreeControl<CourseNode>(node => node.children);
 
   ngOnInit() {
+    this.nestedDataSource.data = TREE_DATA;
 
+  }
 
+  hasNestedChild (index: number, node: CourseNode) {
+    return node?.children?.length > 0;
   }
 
 }
